@@ -1,9 +1,8 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, Image } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -17,27 +16,77 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
+            position: 'absolute', // iOS custom styles for blur effect
+            height: 60,
+            backgroundColor: 'white',
           },
-          default: {},
+          default: {
+            height: 60, // Footer height for other platforms
+          },
         }),
       }}>
+      {/* Home Tab */}
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <Image
+              source={require('../../assets/images/On.png')} // Custom home icon
+              style={{
+                width: 28,  // Size for icon
+                height: 28,
+         
+              }}
+            />
+          ),
+          tabBarLabelStyle: {
+            color: 'black', // Set title text color to black
+          },
         }}
       />
+
+      {/* Wallet Tab */}
       <Tabs.Screen
-        name="explore"
+        name="wallet"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'wallet',
+          tabBarIcon: ({ color }) => (
+            <Image
+              source={require('../../assets/images/Group 275.png')} // Custom wallet icon
+              style={{
+                width: 28,
+                height: 28,
+                tintColor: color,  // Color change based on active state
+              }}
+            />
+          ),
+          tabBarLabelStyle: {
+            color: 'black', // Set title text color to black
+          },
+        }}
+      />
+
+      {/* More Tab */}
+      <Tabs.Screen
+        name="more"
+        options={{
+          title: 'more',
+          tabBarIcon: ({ color }) => (
+            <Image
+              source={require('../../assets/images/On-2.png')} // Custom more icon
+              style={{
+                width: 28,
+                height: 28,
+                tintColor: color,  // Change icon color based on active state
+              }}
+            />
+          ),
+          tabBarLabelStyle: {
+            color: 'black', // Set title text color to black
+          },
         }}
       />
     </Tabs>
